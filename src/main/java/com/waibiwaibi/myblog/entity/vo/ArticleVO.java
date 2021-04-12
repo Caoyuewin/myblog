@@ -1,13 +1,12 @@
-package com.waibiwaibi.myblog.entity.domain;
+package com.waibiwaibi.myblog.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,28 +15,28 @@ import java.util.Date;
  * @author CaoYuewen
  * @version 1.0.0
  * @date {2021/4/12}
- * @description 文章类
+ * @description 文章vo
  */
-@EqualsAndHashCode(callSuper = false)
 @Data
 @Accessors(chain = true)
-public class Article {
-    @TableId(type = IdType.AUTO)
-    private Integer id;
-
+@ApiModel("文章VO")
+public class ArticleVO implements Serializable {
     /**
      * 博客标题
      */
+    @NotBlank(message = "文章标题不能为空")
     private String title;
 
     /**
      * 博客正文
      */
+    @NotBlank(message = "文章内容不能为空")
     private String content;
 
     /**
      * 博客分类
      */
+    @NotNull(message = "博客种类不能为空")
     private Integer kind;
 
     /**
@@ -53,12 +52,10 @@ public class Article {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
     private Date createdAt;
 
     /**
      * 更新时间
      */
-    @TableField(fill =FieldFill.INSERT_UPDATE)
     private Date updatedAt;
 }
