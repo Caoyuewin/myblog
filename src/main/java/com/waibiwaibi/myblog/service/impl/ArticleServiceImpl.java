@@ -9,6 +9,7 @@ import com.waibiwaibi.myblog.entity.vo.ArticleVO;
 import com.waibiwaibi.myblog.service.ArticleService;
 import org.springframework.stereotype.Service;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,5 +36,27 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleVO;
     }
 
-    public List<ArticleVO> listByIds()
+    @Override
+    public List<ArticleVO> listByIds(List<Integer> ids) {
+        List<Article> articles = baseMapper.selectBatchIds(ids);
+        List<ArticleVO> articleVOS = new ArrayList<>();
+        articles.forEach(article -> {
+            ArticleVO articleVO = new ArticleVO();
+            BeanUtil.copyProperties(article, articleVO);
+            articleVOS.add(articleVO);
+        });
+        return articleVOS;
+    }
+
+    @Override
+    public boolean saveBatch(List<ArticleVO> articleVOS) {
+        List<Article> articles = new ArrayList<>();
+        articleVOS.forEach(articleVO -> {
+            Article article = new Article();
+            BeanUtil.copyProperties(articleVO, article);
+            articles.add(article);
+        });
+        return saveBatch(articles);
+    }
+
 }

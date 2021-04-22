@@ -21,6 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @ApiModel("文章VO")
 public class ArticleVO implements Serializable {
+    private Integer id;
     /**
      * 博客标题
      */
@@ -58,4 +59,5 @@ public class ArticleVO implements Serializable {
      * 更新时间
      */
     private Date updatedAt;
+
 }

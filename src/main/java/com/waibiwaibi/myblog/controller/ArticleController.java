@@ -1,15 +1,14 @@
 package com.waibiwaibi.myblog.controller;
 
-import com.waibiwaibi.myblog.entity.domain.Article;
 import com.waibiwaibi.myblog.entity.vo.ArticleVO;
 import com.waibiwaibi.myblog.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Copyright©2020 杭州悦玩网络科技有限公司
@@ -32,9 +31,21 @@ public class ArticleController {
         return articleService.getById(articleId);
     }
 
-    @ApiOperation("新增一遍博客")
+    @ApiOperation("获取多篇博客")
+    @GetMapping("")
+    public List<ArticleVO> batch(@RequestParam("ids") List<Integer> articleIds) {
+        return articleService.listByIds(articleIds);
+    }
+
+    @ApiOperation("新增一篇博客")
     @PostMapping("")
     public boolean insert(@Valid @RequestBody ArticleVO article) {
         return articleService.save(article);
+    }
+
+    @ApiOperation("新增多篇博客")
+    @PatchMapping("")
+    public boolean insertBatch(@Valid @RequestBody List<ArticleVO> articleVOS) {
+        return articleService.saveBatch(articleVOS);
     }
 }

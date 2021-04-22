@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.waibiwaibi.myblog.entity.domain.Article;
 import com.waibiwaibi.myblog.entity.vo.ArticleVO;
 
+import java.util.List;
+
 /**
  * Copyright©2020 杭州悦玩网络科技有限公司
  *
@@ -16,4 +18,8 @@ public interface ArticleService extends IService<Article> {
     boolean save(ArticleVO articleVO);
 
     ArticleVO getById(Integer id);
+
+    List<ArticleVO> listByIds(List<Integer> ids);
+
+    boolean saveBatch(List<ArticleVO> articleVOS);
 }
